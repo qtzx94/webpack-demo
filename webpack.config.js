@@ -1,17 +1,23 @@
 const path = require('path');
+// htmlWebpackPlugin 插件会在打包结束后，自动生成一个html文件，并把打包生成的js文件自动引入到这个html文件中 
+const HtmlWebpackPlugin = require('html-webpack-plugin'); // HtmlWebpackPlugin打包之后运行
+const { CleanWebpackPlugin } = require('clean-webpack-plugin'); // CleanWebpackPlugin打包之前运行，用来删除dist文件夹
 
 module.exports = { // module.exports是CommonJS写法
-	/**
-	 * 单入口文件打包
-	 */
 	mode: 'development',
 	entry: {
-		main: './src/index.js', // 入口文件，即webpack开始打包的入口
+		main: './src/index.js', // 入口文件，即webpack开始打包的入口(如果没有配置output['filename']，则输出默认叫main.js,即key值)
+		sub: './src/index.js'
 	},
 	output: {
 		path: path.resolve(__dirname + '/dist'), //打包出口文件路径
-		filename: 'bundle.js',
+		filename: '[name].js',
+		publicPath: 'http://cdn.com'
 	},
+	plugins: [
+		new HtmlWebpackPlugin({
+			template: 'src/index.html'
+		}), new CleanWebpackPlugin()],
 	module: {
 		rules: [{
 			test: /\.(png|jpg|gif)?$/,
@@ -25,6 +31,11 @@ module.exports = { // module.exports是CommonJS写法
 				}
 			}]
 		}, {
+			test: /\.(eot|ttf|svg|woff|woff2)$/,
+			use: {
+				loader: 'file-loader'
+			}
+		}, {
 			test: /\.css$/,
 			use: [
 				'style-loader',
@@ -33,14 +44,14 @@ module.exports = { // module.exports是CommonJS写法
 		}, {
 			test: /\.scss$/,
 			use: [
-				'style-loader', 
+				'style-loader',
 				{
 					loader: 'css-loader',
 					options: {
 						importLoaders: 2, // 表示所有的scss文件都会依次从下到上执行所有loader（2表示执行css-loader之前的两个postcss-loader和sass-loader）
-						modules: true // 开启css模块化打包，即一个css文件只对当前模块生效
+						// modules: true // 开启css模块化打包，即一个css文件只对当前模块生效
 					}
-				}, 
+				},
 				'sass-loader',
 				'postcss-loader'
 			] // loader执行顺序:从上到下，从右到左，所以先执行sass-loader将scss翻译成css，再执行css-loader和style-loader

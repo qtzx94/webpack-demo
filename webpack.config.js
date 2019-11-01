@@ -13,6 +13,10 @@ module.exports = { // module.exports是CommonJS写法
 		path: path.resolve(__dirname + '/dist'), //打包出口文件路径
 		filename: '[name].js'
 	},
+	devServer: {
+		contentBase: './dist',
+		open: true
+	},
 	plugins: [
 		new HtmlWebpackPlugin({
 			template: 'src/index.html'

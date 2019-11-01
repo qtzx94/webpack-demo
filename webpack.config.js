@@ -5,14 +5,13 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin'); // CleanWebpackP
 
 module.exports = { // module.exports是CommonJS写法
 	mode: 'development',
+	devtool: 'source-map',
 	entry: {
-		main: './src/index.js', // 入口文件，即webpack开始打包的入口(如果没有配置output['filename']，则输出默认叫main.js,即key值)
-		sub: './src/index.js'
+		main: './src/index.js' // 入口文件，即webpack开始打包的入口(如果没有配置output['filename']，则输出默认叫main.js,即key值)
 	},
 	output: {
 		path: path.resolve(__dirname + '/dist'), //打包出口文件路径
-		filename: '[name].js',
-		publicPath: 'http://cdn.com'
+		filename: '[name].js'
 	},
 	plugins: [
 		new HtmlWebpackPlugin({

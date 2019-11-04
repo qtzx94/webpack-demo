@@ -23,10 +23,7 @@
     "webpack-dev-middleware": "^3.7.2"
   },
   "scripts": {
-    "bundle": "webpack",
-    "watch": "webpack --watch",
-    "start": "webpack-dev-server",
-    "server": "node server.js"
+    "start": "webpack-dev-server"
   },
   "author": "qtzx94",
   "license": "ISC"

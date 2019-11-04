@@ -2,6 +2,8 @@ const path = require('path');
 // htmlWebpackPlugin 插件会在打包结束后，自动生成一个html文件，并把打包生成的js文件自动引入到这个html文件中 
 const HtmlWebpackPlugin = require('html-webpack-plugin'); // HtmlWebpackPlugin打包之后运行
 const { CleanWebpackPlugin } = require('clean-webpack-plugin'); // CleanWebpackPlugin打包之前运行，用来删除dist文件夹
+const webpack = require('webpack');
+
 
 module.exports = { // module.exports是CommonJS写法
 	mode: 'development',
@@ -13,7 +15,8 @@ module.exports = { // module.exports是CommonJS写法
 		new HtmlWebpackPlugin({
 			template: 'src/index.html'
 		}), 
-		new CleanWebpackPlugin()
+		new CleanWebpackPlugin(),
+		new webpack.HotModuleReplacementPlugin()
 	],
 	output: {
 		publicPath: '/',
@@ -23,7 +26,9 @@ module.exports = { // module.exports是CommonJS写法
 	devServer: {
 		contentBase: './dist',
 		open: true,
-		port: 8083
+		port: 8083,
+		// hot: true,
+		hotOnly: true
 	},
 	module: {
 		rules: [{

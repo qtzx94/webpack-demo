@@ -14,7 +14,7 @@ module.exports = { // module.exports是CommonJS写法
 	plugins: [
 		new HtmlWebpackPlugin({
 			template: 'src/index.html'
-		}), 
+		}),
 		new CleanWebpackPlugin(),
 		new webpack.HotModuleReplacementPlugin()
 	],
@@ -67,6 +67,22 @@ module.exports = { // module.exports是CommonJS写法
 				'sass-loader',
 				'postcss-loader'
 			] // loader执行顺序:从上到下，从右到左，所以先执行sass-loader将scss翻译成css，再执行css-loader和style-loader
+		}, { 
+			test: /\.js$/, 
+			exclude: /node_modules/, 
+			loader: 'babel-loader'
+			// options: {
+			// 	// presets: [['@babel/preset-env', {
+			// 	// 	useBuiltIns: 'usage' // 只有当前用到的才会注入到代码中，减小代码体积
+			// 	// }]]
+			// 	"plugins": [["@babel/plugin-transform-runtime", {
+			// 		"absoluteRuntime": false,
+			// 		"corejs": 2,
+			// 		"helpers": true,
+			// 		"regenerator": true,
+			// 		"useESModules": false
+			// 	}]]
+			// }
 		}]
 	}
 }

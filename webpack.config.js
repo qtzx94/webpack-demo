@@ -9,18 +9,22 @@ module.exports = { // module.exports是CommonJS写法
 	entry: {
 		main: './src/index.js' // 入口文件，即webpack开始打包的入口(如果没有配置output['filename']，则输出默认叫main.js,即key值)
 	},
+	plugins: [
+		new HtmlWebpackPlugin({
+			template: 'src/index.html'
+		}), 
+		new CleanWebpackPlugin()
+	],
 	output: {
+		publicPath: '/',
 		path: path.resolve(__dirname + '/dist'), //打包出口文件路径
 		filename: '[name].js'
 	},
 	devServer: {
 		contentBase: './dist',
-		open: true
+		open: true,
+		port: 8083
 	},
-	plugins: [
-		new HtmlWebpackPlugin({
-			template: 'src/index.html'
-		}), new CleanWebpackPlugin()],
 	module: {
 		rules: [{
 			test: /\.(png|jpg|gif)?$/,

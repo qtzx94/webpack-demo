@@ -31,10 +31,12 @@
     "url-loader": "^2.2.0",
     "webpack": "^4.16.2",
     "webpack-cli": "^3.3.10",
-    "webpack-dev-middleware": "^3.7.2"
+    "webpack-dev-middleware": "^3.7.2",
+    "webpack-merge": "^4.2.2"
   },
   "scripts": {
-    "start": "webpack-dev-server"
+    "dev": "webpack-dev-server --config ./build/webpack.dev.js",
+    "build": "webpack --config ./build/webpack.prod.js"
   },
   "author": "qtzx94",
   "license": "ISC"

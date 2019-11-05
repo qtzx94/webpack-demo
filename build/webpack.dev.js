@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const commonConfig = require('./webpack.common');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const devConfig = { // module.exports是CommonJS写法
 	mode: 'development',
@@ -13,7 +14,8 @@ const devConfig = { // module.exports是CommonJS写法
 		// hotOnly: true // 不支持HMR，或者是HMR有问题也不刷新浏览器
 	},
 	plugins: [
-		new webpack.HotModuleReplacementPlugin()
+		new webpack.HotModuleReplacementPlugin(),
+		// new BundleAnalyzerPlugin()
 	],
 	optimization: {
 		usedExports: true

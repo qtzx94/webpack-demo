@@ -5,11 +5,10 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin'); // CleanWebpackP
 const webpack = require('webpack');
 
 module.exports = {
-  entry: {
-		lodash: './src/lodash.js',
+	entry: {
 		main: './src/index.js' // 入口文件，即webpack开始打包的入口(如果没有配置output['filename']，则输出默认叫main.js,即key值)
-  },
-  module: {
+	},
+	module: {
 		rules: [{
 			test: /\.(png|jpg|gif)?$/,
 			use: [{
@@ -46,8 +45,8 @@ module.exports = {
 				'sass-loader',
 				'postcss-loader'
 			] // loader执行顺序:从下往上，从右到左，所以先执行sass-loader将scss翻译成css，再执行css-loader和style-loader
-		}, { 
-			test: /\.js$/, 
+		}, {
+			test: /\.js$/,
 			exclude: /node_modules/, // babel-loader在做语法解析的时候会忽略/node_modules文件夹下的第三方模块代码，加快打包速度
 			loader: 'babel-loader' // babel-loader配置信息在.babelrc文件中，执行顺序是自下而上，从右往左
 			// options: {
@@ -60,14 +59,21 @@ module.exports = {
 			// 	}]]
 			// }
 		}]
-  },
-  plugins: [
+	},
+	plugins: [
 		new HtmlWebpackPlugin({ // HtmlWebpackPlugin用于自动生成html文件
 			template: 'src/index.html'
 		}),
 		new CleanWebpackPlugin(), // 清除打包后的目录文件
-  ],
-  output: {
+	],
+	optimization: {
+		splitChunks: {
+			// include all types of chunks
+			chunks: 'all',
+			minSize: 30
+		}
+	},
+	output: {
 		path: path.resolve(__dirname + '/../dist'), //打包出口文件路径
 		filename: '[name].js' // [name]是指entry里面的'main'，即打包后文件名为main.js
 	}

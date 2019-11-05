@@ -1,9 +1,13 @@
 {
-  "plugins": [["@babel/plugin-transform-runtime", {
-    "absoluteRuntime": false,
-    "corejs": 2,
-    "helpers": true,
-    "regenerator": true,
-    "useESModules": false
-  }]]
+  presets: [
+    [
+      "@babel/preset-env", {
+        targets: {
+          chrome: "67"
+        },
+        useBuiltIns: "usage" // 只有当前用到的才会注入到代码中，减小代码体积
+      }
+    ],
+    "@babel/preset-react"
+  ]
 }

@@ -11,24 +11,12 @@ module.exports = { // module.exports是CommonJS写法
 	entry: {
 		main: './src/index.js' // 入口文件，即webpack开始打包的入口(如果没有配置output['filename']，则输出默认叫main.js,即key值)
 	},
-	plugins: [
-		new HtmlWebpackPlugin({
-			template: 'src/index.html'
-		}),
-		new CleanWebpackPlugin(),
-		new webpack.HotModuleReplacementPlugin()
-	],
-	output: {
-		publicPath: '/',
-		path: path.resolve(__dirname + '/dist'), //打包出口文件路径
-		filename: '[name].js'
-	},
 	devServer: {
-		contentBase: './dist',
+		contentBase: './dist', // 在哪个目录下启动服务器
 		open: true,
 		port: 8083,
-		// hot: true,
-		hotOnly: true
+		hot: true,
+		hotOnly: true // 不支持HMR，或者是HMR有问题也不刷新浏览器
 	},
 	module: {
 		rules: [{
@@ -50,9 +38,9 @@ module.exports = { // module.exports是CommonJS写法
 		}, {
 			test: /\.css$/,
 			use: [
-				'style-loader',
-				'css-loader'
-			] // css-loader合并多个.css文件为一个css文件，style-loader是将合并后的css文件挂载到head标签下的style标签里
+				'style-loader', // style-loader是将合并后的css文件挂载到head标签下的style标签里
+				'css-loader' // css-loader合并多个.css文件为一个css文件
+			]
 		}, {
 			test: /\.scss$/,
 			use: [
@@ -66,15 +54,12 @@ module.exports = { // module.exports是CommonJS写法
 				},
 				'sass-loader',
 				'postcss-loader'
-			] // loader执行顺序:从上到下，从右到左，所以先执行sass-loader将scss翻译成css，再执行css-loader和style-loader
+			] // loader执行顺序:从下往上，从右到左，所以先执行sass-loader将scss翻译成css，再执行css-loader和style-loader
 		}, { 
 			test: /\.js$/, 
-			exclude: /node_modules/, 
-			loader: 'babel-loader'
+			exclude: /node_modules/, // babel-loader在做语法解析的时候会忽略/node_modules文件夹下的第三方模块代码，加快打包速度
+			loader: 'babel-loader' // babel-loader配置信息在.babelrc文件中，执行顺序是自下而上，从右往左
 			// options: {
-			// 	// presets: [['@babel/preset-env', {
-			// 	// 	useBuiltIns: 'usage' // 只有当前用到的才会注入到代码中，减小代码体积
-			// 	// }]]
 			// 	"plugins": [["@babel/plugin-transform-runtime", {
 			// 		"absoluteRuntime": false,
 			// 		"corejs": 2,
@@ -84,5 +69,17 @@ module.exports = { // module.exports是CommonJS写法
 			// 	}]]
 			// }
 		}]
+	},
+	plugins: [
+		new HtmlWebpackPlugin({ // HtmlWebpackPlugin用于自动生成html文件
+			template: 'src/index.html'
+		}),
+		new CleanWebpackPlugin(), // 清除打包后的目录文件
+		new webpack.HotModuleReplacementPlugin()
+	],
+	output: {
+		publicPath: '/',
+		path: path.resolve(__dirname + '/dist'), //打包出口文件路径
+		filename: '[name].js' // [name]是指entry里面的'main'，即打包后文件名为main.js
 	}
 }

@@ -6,6 +6,7 @@ const webpack = require('webpack');
 
 module.exports = {
   entry: {
+		lodash: './src/lodash.js',
 		main: './src/index.js' // 入口文件，即webpack开始打包的入口(如果没有配置output['filename']，则输出默认叫main.js,即key值)
   },
   module: {
@@ -67,8 +68,7 @@ module.exports = {
 		new CleanWebpackPlugin(), // 清除打包后的目录文件
   ],
   output: {
-		publicPath: '/',
-		path: path.resolve(__dirname + '/dist'), //打包出口文件路径
+		path: path.resolve(__dirname + '/../dist'), //打包出口文件路径
 		filename: '[name].js' // [name]是指entry里面的'main'，即打包后文件名为main.js
 	}
 }

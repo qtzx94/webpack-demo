@@ -6,8 +6,8 @@ const webpack = require('webpack');
 
 
 module.exports = { // module.exports是CommonJS写法
-	mode: 'development',
-	devtool: 'source-map',
+	mode: 'production',
+	devtool: 'cheap-module-source-map',
 	entry: {
 		main: './src/index.js' // 入口文件，即webpack开始打包的入口(如果没有配置output['filename']，则输出默认叫main.js,即key值)
 	},
@@ -77,6 +77,9 @@ module.exports = { // module.exports是CommonJS写法
 		new CleanWebpackPlugin(), // 清除打包后的目录文件
 		new webpack.HotModuleReplacementPlugin()
 	],
+	// optimization: {
+	// 	usedExports: true
+	// },
 	output: {
 		publicPath: '/',
 		path: path.resolve(__dirname + '/dist'), //打包出口文件路径

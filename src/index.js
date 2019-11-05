@@ -1,12 +1,5 @@
-import "@babel/polyfill"; // polyfill 会污染全局环境
+// Tree Shaking（只支持ES Module写法引入即import... from...），作用：引入模块时，只引入其中需要的代码
 
-import React, { Component } from 'react';
-import ReactDom from 'react-dom';
+import { add } from './math';
 
-class App extends Component {
-  render() {
-    return <div>Hello World</div>
-  }
-}
-
-ReactDom.render(<App />, document.getElementById('root'));
+add(1, 2);

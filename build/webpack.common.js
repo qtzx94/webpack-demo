@@ -81,7 +81,7 @@ module.exports = {
         vendors: {
           test: /[\\/]node_modules[\\/]/,
 					priority: -10, // priority:优先级，数字越大，优先级越高，即当模块同时满足vendors和default条件时，先放入优先级高的组中，即vendors.js中
-					filename: 'vendors.js'
+					// filename: 'vendors.js'
         },
         default: {
           priority: -20,

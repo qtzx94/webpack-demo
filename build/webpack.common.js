@@ -68,10 +68,28 @@ module.exports = {
 	],
 	optimization: {
 		splitChunks: {
-			// include all types of chunks
-			chunks: 'all',
-			minSize: 30
-		}
+      chunks: 'all', // 当chunks为initial即打包同步代码时，需要配合cacheGroups参数
+      minSize: 30000, // 大于30kb才进行代码分割
+      maxSize: 0,
+      minChunks: 1, // 当一个模块被至少用了多少次的时候才使用代码分割
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3, // 入口文件最多只能分割成3个文件
+      automaticNameDelimiter: '~', // delimiter:分隔符
+      automaticNameMaxLength: 30,
+      name: true,
+      cacheGroups: { // 之所以称为缓存组：当引入多个模块时，先放入缓存组中，最后生成一个vendors.js，如果没有cacheGroups参数配置，那么多个模块会分割成多个文件而非最终合并成一个文件
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+					priority: -10, // priority:优先级，数字越大，优先级越高，即当模块同时满足vendors和default条件时，先放入优先级高的组中，即vendors.js中
+					filename: 'vendors.js'
+        },
+        default: {
+          priority: -20,
+					reuseExistingChunk: true, // 忽略之前已经被打包的模块，直接复用之前的
+					filename: 'common.js'
+        }
+      }
+    }
 	},
 	output: {
 		path: path.resolve(__dirname + '/../dist'), //打包出口文件路径

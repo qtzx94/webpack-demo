@@ -45,7 +45,11 @@ module.exports = {
 			template: 'src/index.html'
 		}),
 		new CleanWebpackPlugin(), // 清除打包后的目录文件
-	],
+		new webpack.ProvidePlugin({
+			$: 'jquery',
+			_join: ['lodash', 'join']
+		})
+	], 
 	optimization: {
 		runtimeChunk: {
 			name: 'runtime' // runtime.js用于放置连接main.js和vendors.js之间的关系 manifest

@@ -28,7 +28,11 @@ module.exports = {
 		},{
 			test: /\.js$/,
 			exclude: /node_modules/, // babel-loader在做语法解析的时候会忽略/node_modules文件夹下的第三方模块代码，加快打包速度
-			loader: 'babel-loader' // babel-loader配置信息在.babelrc文件中，执行顺序是自下而上，从右往左
+			use: [{
+				loader: 'babel-loader' // babel-loader配置信息在.babelrc文件中，执行顺序是自下而上，从右往左
+			}, {
+				loader: 'imports-loader?this=>window' // 将模块中this指向window
+			}]
 			// options: {
 			// 	"plugins": [["@babel/plugin-transform-runtime", {
 			// 		"absoluteRuntime": false,
@@ -45,7 +49,7 @@ module.exports = {
 			template: 'src/index.html'
 		}),
 		new CleanWebpackPlugin(), // 清除打包后的目录文件
-		new webpack.ProvidePlugin({
+		new webpack.ProvidePlugin({ // 使用webpack.ProvidePlugin自定义一个属性指向库，在其他模块中就可以直接使用，而不用导入库
 			$: 'jquery',
 			_join: ['lodash', 'join']
 		})

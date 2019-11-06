@@ -1,9 +1,3 @@
-import _ from 'lodash';
-import $ from 'jquery';
-import { ui } from './jquery.ui';
-
-ui();
-
-const dom = $('div');
-dom.html(_.join(['qtzx', '94', 'hello'], '--'));
-$('body').append(dom);
+// shimming 垫片
+// 使用imports-loader改变this指向，默认指向module
+console.log(this === window);

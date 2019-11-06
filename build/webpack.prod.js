@@ -5,7 +5,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const prodConfig = { // module.exports是CommonJS写法
 	mode: 'production',
-	devtool: 'cheap-module-source-map',
+	// devtool: 'cheap-module-source-map',
 	module: {
 		rules: [
 			{
@@ -39,6 +39,10 @@ const prodConfig = { // module.exports是CommonJS写法
 	],
 	optimization: {
 		minimizer: [new OptimizeCSSAssetsPlugin({})]
+	},
+	output: {
+		filename: '[name].[contenthash].js', // [name]是指entry里面的'main'，即打包后文件名为main.js
+		chunkFilename: '[name].[contenthash].js'
 	}
 }
 

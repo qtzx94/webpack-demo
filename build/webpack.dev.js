@@ -41,7 +41,11 @@ const devConfig = { // module.exports是CommonJS写法
 	plugins: [
 		new webpack.HotModuleReplacementPlugin(),
 		// new BundleAnalyzerPlugin()
-	]
+	],
+	output: {
+		filename: '[name].js', // [name]是指entry里面的'main'，即打包后文件名为main.js
+		chunkFilename: '[name].js'
+	}
 }
 
 module.exports = merge(commonConfig, devConfig);

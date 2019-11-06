@@ -47,6 +47,9 @@ module.exports = {
 		new CleanWebpackPlugin(), // 清除打包后的目录文件
 	],
 	optimization: {
+		runtimeChunk: {
+			name: 'runtime' // runtime.js用于放置连接main.js和vendors.js之间的关系 manifest
+		},
 		usedExports: true,
 		splitChunks: {
       chunks: 'all', // 当chunks为initial即打包同步代码时，需要配合cacheGroups参数
@@ -59,10 +62,10 @@ module.exports = {
       automaticNameMaxLength: 30,
       name: true,
       cacheGroups: { // 之所以称为缓存组：当引入多个模块时，先放入缓存组中，最后生成一个vendors.js，如果没有cacheGroups参数配置，那么多个模块会分割成多个文件而非最终合并成一个文件
-        vendors: {
+        vendors: { 
           test: /[\\/]node_modules[\\/]/,
 					priority: -10, // priority:优先级，数字越大，优先级越高，即当模块同时满足vendors和default条件时，先放入优先级高的组中，即vendors.js中
-					// filename: 'vendors.js'
+					name: 'vendors' // vendors.js放置的是库，main.js放置的是业务逻辑
         },
         default: {
           priority: -20,
@@ -72,9 +75,8 @@ module.exports = {
       }
     }
 	},
+	performance: false,
 	output: {
-		path: path.resolve(__dirname + '/../dist'), //打包出口文件路径
-		chunkFilename: '[name].chunk.js',
-		filename: '[name].js' // [name]是指entry里面的'main'，即打包后文件名为main.js
+		path: path.resolve(__dirname + '/../dist') //打包出口文件路径
 	}
 }

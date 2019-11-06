@@ -1,7 +1,4 @@
 const webpack = require('webpack');
-const merge = require('webpack-merge');
-const commonConfig = require('./webpack.common');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const devConfig = { // module.exports是CommonJS写法
 	mode: 'development',
@@ -48,4 +45,4 @@ const devConfig = { // module.exports是CommonJS写法
 	}
 }
 
-module.exports = merge(commonConfig, devConfig);
+module.exports = devConfig;

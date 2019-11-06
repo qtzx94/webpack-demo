@@ -16,7 +16,15 @@ module.exports = { // module.exports是CommonJS写法
 		open: true,
 		port: 8083,
 		hot: true,
-		hotOnly: true // 不支持HMR，或者是HMR有问题也不刷新浏览器
+		hotOnly: true, // 不支持HMR，或者是HMR有问题也不刷新浏览器
+		proxy: { // webpackDevServer只在开发环境下生效，生产环境没有DevServer
+			'/react/api': {
+				target: 'http://www.dell-lee.com',
+				pathRewrite: {
+					// 'header.json': 'demo.json'
+				}
+			}
+		}
 	},
 	module: {
 		rules: [{

@@ -1,3 +1,12 @@
-// shimming 垫片
-// 使用imports-loader改变this指向，默认指向module
-console.log(this === window);
+console.log('hello this is qtzx94');
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(registration => {
+        console.log('service-worker registed', registration);
+      }).catch(registrationError => {
+        console.log('service-worker register error', registrationError);
+      })
+  })
+}

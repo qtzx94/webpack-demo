@@ -1,5 +1,6 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 const prodConfig = { // module.exports是CommonJS写法
 	mode: 'production',
@@ -33,6 +34,10 @@ const prodConfig = { // module.exports是CommonJS写法
 		new MiniCssExtractPlugin({
 			filename: '[name].css',
 			chunkFilename: '[name].chunk.css'
+		}),
+		new WorkboxPlugin.GenerateSW({ // SW：service worker ，workbox-webpack-plugin插件作用：当第一次成功访问网页后，第二次网站宕机后依然可以通过本地缓存访问网站
+			clientsClaim: true,
+			skipWaiting: true
 		})
 	],
 	optimization: {

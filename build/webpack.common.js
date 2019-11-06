@@ -2,7 +2,6 @@ const path = require('path');
 // htmlWebpackPlugin 插件会在打包结束后，自动生成一个html文件，并把打包生成的js文件自动引入到这个html文件中 
 const HtmlWebpackPlugin = require('html-webpack-plugin'); // HtmlWebpackPlugin打包之后运行
 const { CleanWebpackPlugin } = require('clean-webpack-plugin'); // CleanWebpackPlugin打包之前运行，用来删除dist文件夹
-const webpack = require('webpack');
 const merge = require('webpack-merge');
 const devConfig = require('./webpack.dev');
 const prodConfig = require('./webpack.prod');
@@ -33,8 +32,6 @@ const commonConfig = {
 			exclude: /node_modules/, // babel-loader在做语法解析的时候会忽略/node_modules文件夹下的第三方模块代码，加快打包速度
 			use: [{
 				loader: 'babel-loader' // babel-loader配置信息在.babelrc文件中，执行顺序是自下而上，从右往左
-			}, {
-				loader: 'imports-loader?this=>window' // 将模块中this指向window
 			}]
 			// options: {
 			// 	"plugins": [["@babel/plugin-transform-runtime", {
@@ -51,11 +48,7 @@ const commonConfig = {
 		new HtmlWebpackPlugin({ // HtmlWebpackPlugin用于自动生成html文件
 			template: 'src/index.html'
 		}),
-		new CleanWebpackPlugin(), // 清除打包后的目录文件
-		new webpack.ProvidePlugin({ // 使用webpack.ProvidePlugin自定义一个属性指向库，在其他模块中就可以直接使用，而不用导入库
-			$: 'jquery',
-			_join: ['lodash', 'join']
-		})
+		new CleanWebpackPlugin() // 清除打包后的目录文件
 	],
 	optimization: {
 		runtimeChunk: {
